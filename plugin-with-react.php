@@ -35,6 +35,8 @@ if ( !define( 'ABSPATH' ) ) {
 trailingslashit()
 http://example.com/directory/
 
+https://youtu.be/2HpDSTMAq9s?t = 81
+
 */
 define( 'WPWR_PATH', plugin_dir_path( __FILE__ ) );
 // กำหนด path ทางไฟล์

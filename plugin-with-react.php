@@ -51,4 +51,18 @@ plugins_url() จะทำให้ได้ URL ที่มี trailing slash 
 define( 'WPWR_URL', plugins_url( '/', __FILE__ ) );
 // กำหนด URL
 
+// ฟังก์ชัน 'new_dashboard_setup' ที่กำหนดไว้
+// ฟังก์ชันนี้จะถูกใช้เพื่อเพิ่มหรือแก้ไขเนื้อหาบนหน้าแดชบอร์ดของ WordPress
+
+function new_dashboard_setup() {
+    // โค้ดสำหรับการเพิ่มหรือแก้ไขเนื้อหาหน้าแดชบอร์ดควรถูกเพิ่มที่นี่
+    wp_add_dashboard_widget {
+
+    }
+}
+
+// เชื่อมต่อ 'new_dashboard_setup' กับ hook 'wp_dashboard_setup'
+// ทำให้ฟังก์ชัน 'new_dashboard_setup' ถูกเรียกใช้งานเมื่อหน้าแดชบอร์ดของ WordPress กำลังถูกตั้งค่า
+add_action( 'wp_dashboard_setup', 'new_dashboard_setup' );
+
 ?>

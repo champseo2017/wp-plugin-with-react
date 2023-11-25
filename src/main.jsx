@@ -8,7 +8,11 @@ import "./index.css";
 if (rootElement) ช่วยให้แน่ใจว่าโค้ด React จะไม่พยายาม render หากไม่พบ element เป้าหมายในหน้านั้น (ซึ่งเป็นสิ่งที่สำคัญเมื่อใช้งานใน WordPress เนื่องจากไม่ทุกหน้าจะมี element นี้).
 
 */
-const rootElement = document.getElementById("my-react-app");
+const isDevelopment = import.meta.env.MODE === "development";
+const rootElement = document.getElementById(
+  isDevelopment ? "root" : `my-react-app`
+);
+
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>

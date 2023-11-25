@@ -1,7 +1,7 @@
 <?php
 /**
-* Plugin Name: Plugin with React
-* Description: A WordPress plugin that uses React.js
+* Plugin Name: My React Plugin
+* Description: A simple WordPress plugin with React.js
 * Version: 1.0
 * Author: Your Name
 */
@@ -12,29 +12,28 @@ if ( ! defined( 'ABSPATH' ) ) {
     // หยุดการทำงานของสคริปต์ถ้าไม่ได้ถูกเรียกจาก WordPress
 }
 
-// กำหนดค่าคงที่สำหรับปลั๊กอิน
-define( 'WPWR_PATH', plugin_dir_path( __FILE__ ) );
-// กำหนด path ทางไฟล์
-define( 'WPWR_URL', plugins_url( '/', __FILE__ ) );
-// กำหนด URL
+function my_react_plugin_script() {
+    $dir = plugin_dir_path( __FILE__ ) . 'dist/assets/';
 
-// ฟังก์ชัน 'new_dashboard_setup' ที่กำหนดไว้
-
-function new_dashboard_setup() {
-    // โค้ดสำหรับการเพิ่มหรือแก้ไขเนื้อหาหน้าแดชบอร์ด
-    wp_add_dashboard_widget(
-        'new_dashboard_widget', // widget_id
-        'New Graph Widget',
-        'new_dashboard_widget_callback' // callback function
-    );
+    $script_files = scandir( $dir );
+    foreach ( $script_files as $file ) {
+        if ( preg_match( '/index.*\.js$/', $file ) ) {
+            wp_enqueue_script( 'my-react-plugin', plugin_dir_url( __FILE__ ) . 'dist/assets/' . $file, array( 'wp-element' ), '1.0.0', true );
+            break;
+        }
+    }
+    /*
+    ใน WordPress: เมื่อคุณต้องการใช้สคริปต์ที่พัฒนาด้วย React ใน WordPress, WordPress ต้องรู้ว่าสคริปต์นั้นต้องการ React เพื่อทำงาน. การระบุ 'wp-element' เป็นการพึ่งพาใน wp_enqueue_script คือการบอก WordPress ว่า "ก่อนที่จะโหลดสคริปต์นี้, โปรดแน่ใจว่า React และ ReactDOM (ซึ่งอยู่ใน 'wp-element') ถูกโหลดแล้ว".
+    */
 }
+add_action( 'wp_enqueue_scripts', 'my_react_plugin_script' );
 
-// เชื่อมต่อ 'new_dashboard_setup' กับ hook 'wp_dashboard_setup'
-add_action( 'wp_dashboard_setup', 'new_dashboard_setup' );
+// สร้าง Shortcode
 
-// Callback function สำหรับ widget
-
-function new_dashboard_widget_callback() {
-    echo '<div id="new-dashboard-widget"></div>';
+function my_react_app_shortcode() {
+    return '<div id="my-react-app"></div>';
+    // ตำแหน่งที่ React component ของคุณจะถูก render
 }
+add_shortcode( 'my_react_app', 'my_react_app_shortcode' );
+
 ?>
